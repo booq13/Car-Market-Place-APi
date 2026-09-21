@@ -9,6 +9,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from .models import Car, UserProfile, CarImage, Favorite, Review
 from .utils import free_listing_limit_reached
