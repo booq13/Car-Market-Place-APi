@@ -6,12 +6,14 @@ from .models import Car, UserProfile, CarImage, Favorite, Review
 
 class CarSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
+    owner_id = serializers.ReadOnlyField()
 
     class Meta:
         model = Car
         fields = [
             "id",
             "owner",
+            "owner_id",
             "brand",
             "model",
             "year",

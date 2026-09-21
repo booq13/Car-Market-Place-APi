@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework.views import APIView
+from drf_spectacular.utils import extend_schema, inline_serializer
 
 
 from listings.models import Subscription, UserProfile
@@ -258,6 +259,7 @@ def payment_success(request):
             "<p>Якщо щойно оплатив — зачекай кілька секунд і перевір профіль.</p>"
         )
 
+    return_url = f"{settings.FRONTEND_URL}/subscription"
     html = f"""<!DOCTYPE html>
 <html lang="uk">
 <head><meta charset="utf-8"><title>Оплата успішна</title></head>
@@ -265,18 +267,20 @@ def payment_success(request):
   <h1>Оплата успішна</h1>
   {status_line}
   <p><small>session_id: {session_id or "—"}</small></p>
-  <p><a href="/admin/">Admin</a></p>
+  <p><a href="{return_url}">Повернутися в додаток</a></p>
 </body></html>"""
     return HttpResponse(html)
 
 
 @require_GET
 def payment_cancel(request):
-    html = """<!DOCTYPE html>
+    return_url = f"{settings.FRONTEND_URL}/subscription"
+    html = f"""<!DOCTYPE html>
 <html lang="uk">
 <head><meta charset="utf-8"><title>Оплату скасовано</title></head>
 <body style="font-family:sans-serif;max-width:520px;margin:40px auto;padding:20px;">
   <h1>Оплату скасовано</h1>
   <p>Ти повернувся з Stripe без оплати. Premium не активовано.</p>
+  <p><a href="{return_url}">Повернутися в додаток</a></p>
 </body></html>"""
     return HttpResponse(html)
