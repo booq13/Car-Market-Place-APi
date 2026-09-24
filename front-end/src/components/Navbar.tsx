@@ -4,24 +4,25 @@ import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../hooks/useProfile'
 import { useLanguage } from '../i18n/LanguageContext'
 import { LANGUAGES } from '../i18n/translations'
+import { LogoMark } from './icons'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `rounded-lg px-3 py-2 text-sm font-medium transition ${
-    isActive ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'
+  `border-b-2 px-3 py-4 text-sm font-medium transition ${
+    isActive ? 'border-indigo-500 text-white' : 'border-transparent text-slate-300 hover:text-white'
   }`
 
 function LanguageSwitch() {
   const { language, setLanguage } = useLanguage()
 
   return (
-    <div className="flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold">
+    <div className="flex shrink-0 items-center rounded-full border border-white/15 bg-white/5 p-0.5 text-xs font-semibold">
       {LANGUAGES.map((lang) => (
         <button
           key={lang.code}
           onClick={() => setLanguage(lang.code)}
           aria-pressed={language === lang.code}
           className={`rounded-full px-2 py-1 transition sm:px-2.5 ${
-            language === lang.code ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-slate-700'
+            language === lang.code ? 'bg-white text-ink' : 'text-slate-300 hover:text-white'
           }`}
         >
           {lang.label}
@@ -46,13 +47,16 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-4">
-        <Link to="/" className="flex shrink-0 items-center gap-2 text-lg font-bold text-slate-900">
-          <span className="text-xl">🚗</span> <span className="hidden sm:inline">Car Marketplace</span>
+    <header className="sticky top-0 z-30 bg-ink shadow-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4">
+        <Link to="/" className="flex shrink-0 items-center gap-2.5 py-3 text-lg font-extrabold tracking-tight text-white">
+          <LogoMark className="h-8 w-8 text-indigo-600" />
+          <span className="hidden sm:inline">
+            Car<span className="text-indigo-400">Market</span>
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="ml-4 mr-auto hidden items-center gap-2 md:flex">
           <NavLink to="/" end className={linkClass}>
             {t('nav.catalog')}
           </NavLink>
@@ -64,32 +68,35 @@ export function Navbar() {
               <NavLink to="/favorites" className={linkClass}>
                 {t('nav.favorites')}
               </NavLink>
-              <NavLink to="/listings/new" className={linkClass}>
-                {t('nav.addCar')}
-              </NavLink>
             </>
           )}
         </nav>
 
         <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
           <LanguageSwitch />
+          <Link
+            to="/listings/new"
+            className="hidden whitespace-nowrap rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 sm:block"
+          >
+            {t('nav.addCar')}
+          </Link>
 
           {isAuthenticated ? (
             <div className="relative">
               <button
                 onClick={() => setMenuOpen((v) => !v)}
-                className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                className="flex items-center gap-2 rounded-lg border border-white/15 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10"
               >
                 {profile?.avatar ? (
                   <img src={profile.avatar} alt="" className="h-6 w-6 rounded-full object-cover" />
                 ) : (
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 text-xs font-semibold text-white">
                     {username?.slice(0, 1).toUpperCase()}
                   </span>
                 )}
                 {username}
                 {profile?.is_premium && (
-                  <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-amber-700">
+                  <span className="rounded bg-amber-400 px-1.5 py-0.5 text-[10px] font-bold uppercase text-amber-950">
                     Premium
                   </span>
                 )}
@@ -103,6 +110,13 @@ export function Navbar() {
                     onClick={() => setMenuOpen(false)}
                   />
                   <div className="absolute right-0 z-20 mt-2 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-lg">
+                    <Link
+                      to="/listings/new"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-4 py-2 text-sm font-semibold text-indigo-600 hover:bg-slate-50 sm:hidden"
+                    >
+                      {t('nav.addCar')}
+                    </Link>
                     <Link
                       to="/my-listings"
                       onClick={() => setMenuOpen(false)}
@@ -145,13 +159,13 @@ export function Navbar() {
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 to="/login"
-                className="whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 sm:px-3"
+                className="whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-slate-200 hover:bg-white/10 sm:px-3"
               >
                 {t('nav.login')}
               </Link>
               <Link
                 to="/register"
-                className="whitespace-nowrap rounded-lg bg-indigo-600 px-2 py-2 text-sm font-medium text-white hover:bg-indigo-500 sm:px-3"
+                className="whitespace-nowrap rounded-lg border border-white/20 px-2 py-2 text-sm font-medium text-white hover:bg-white/10 sm:px-3"
               >
                 {t('nav.register')}
               </Link>

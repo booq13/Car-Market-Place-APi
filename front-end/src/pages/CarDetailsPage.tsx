@@ -12,6 +12,7 @@ import { useFavorites } from '../hooks/useFavorites'
 import { useLanguage } from '../i18n/LanguageContext'
 import { extractErrorMessage } from '../lib/api'
 import { formatMileage, formatPrice } from '../lib/format'
+import { CalendarIcon, GaugeIcon, UserIcon } from '../components/icons'
 
 export function CarDetailsPage() {
   const { id } = useParams<{ id: string }>()
@@ -64,10 +65,13 @@ export function CarDetailsPage() {
   const cover = images[activeImage] ?? images[0]
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
+      <Link to="/" className="text-sm font-medium text-slate-500 hover:text-indigo-600">
+        ← {t('nav.catalog')}
+      </Link>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="flex flex-col gap-3">
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-100">
+          <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-200 shadow-sm">
             {cover ? (
               <img
                 src={cover.image_url}
@@ -104,10 +108,10 @@ export function CarDetailsPage() {
           )}
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                 {car.brand} {car.model}
               </h1>
               {car.is_vip && (
@@ -121,17 +125,30 @@ export function CarDetailsPage() {
                 </span>
               )}
             </div>
-            <p className="mt-1 text-sm text-slate-500">
-              {t('carDetails.yearMileage', { year: car.year, mileage: formatMileage(car.mileage, language) })}
-            </p>
           </div>
 
-          <p className="text-3xl font-bold text-indigo-600">{formatPrice(car.price, language)}</p>
+          <p className="text-4xl font-extrabold tracking-tight text-slate-900">{formatPrice(car.price, language)}</p>
 
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4">
-            <div>
-              <p className="text-xs uppercase tracking-wide text-slate-400">{t('carDetails.sellerLabel')}</p>
-              <p className="font-medium text-slate-800">{car.owner ?? t('common.unknown')}</p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-3">
+              <CalendarIcon className="h-6 w-6 text-indigo-600" />
+              <span className="font-semibold text-slate-800">{car.year}</span>
+            </div>
+            <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-3">
+              <GaugeIcon className="h-6 w-6 text-indigo-600" />
+              <span className="font-semibold text-slate-800">{formatMileage(car.mileage, language)}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg bg-slate-50 p-4">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-slate-500">
+                <UserIcon className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-slate-500">{t('carDetails.sellerLabel')}</p>
+                <p className="font-semibold text-slate-800">{car.owner ?? t('common.unknown')}</p>
+              </div>
             </div>
             {isAuthenticated && !isOwner && (
               <button

@@ -24,7 +24,7 @@ export function FavoritesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold text-slate-900">{t('nav.favorites')}</h1>
+      <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">{t('nav.favorites')}</h1>
 
       {isLoading ? (
         <Spinner label={t('favorites.loading')} />
@@ -39,7 +39,7 @@ export function FavoritesPage() {
           }
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cars.map((car) => (
             <CarCard
               key={car.id}

@@ -27,7 +27,7 @@ export function MyListingsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">{t('myListings.title')}</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">{t('myListings.title')}</h1>
           {status && (
             <p className="text-sm text-slate-500">
               {t('myListings.activeCount', { count: status.active_listings_count })}
@@ -39,7 +39,7 @@ export function MyListingsPage() {
         </div>
         <Link
           to="/listings/new"
-          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+          className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500"
         >
           {t('nav.addCar')}
         </Link>
@@ -56,7 +56,7 @@ export function MyListingsPage() {
           }
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {myCars.map((car) => (
             <CarCard key={car.id} car={car} />
           ))}

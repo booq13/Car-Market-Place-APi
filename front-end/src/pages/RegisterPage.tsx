@@ -38,9 +38,9 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-sm">
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">{t('auth.registerTitle')}</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="mx-auto max-w-md py-6">
+      <h1 className="mb-6 text-center text-3xl font-extrabold tracking-tight text-slate-900">{t('auth.registerTitle')}</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border border-slate-200 border-t-4 border-t-indigo-600 bg-white p-7 shadow-md">
         <label className="flex flex-col gap-1 text-sm font-medium text-slate-700">
           {t('auth.usernameLabel')}
           <input
@@ -88,7 +88,7 @@ export function RegisterPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:opacity-60"
+          className="mt-2 cursor-pointer rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:opacity-60"
         >
           {submitting ? t('auth.registering') : t('auth.registerButton')}
         </button>

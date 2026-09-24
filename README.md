@@ -17,7 +17,8 @@ Built as a Django REST API backend paired with a React + TypeScript single-page 
 - **Profile** - phone, city, avatar, seller rating
 - **Premium subscription** - Stripe Checkout integration plus a no-payment demo activation endpoint for testing
 - **Bilingual UI** - Ukrainian and English, switchable from the navbar, persisted per browser
-- **Responsive** - works down to a 360px-wide phone screen
+- **Modern automotive UI** - dark navy and orange-red theme, hero search, sidebar filters, photo-first listing cards, VIP highlighting
+- **Responsive** - works down to a 360px-wide phone screen, with collapsible filters on mobile
 
 ## Screenshots
 
